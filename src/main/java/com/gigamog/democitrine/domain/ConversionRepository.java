@@ -8,16 +8,15 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Repository
 public class ConversionRepository {
 
-    public List<Conversion> getAllConversions(Comparator<Conversion> sort){
+    public Stream<Conversion> getAllConversions(){
         return Arrays.stream(ConversionsTable.values())
-                .map(this::mapConversion)
-                .sorted(sort)
-                .collect(Collectors.toList());
+                .map(this::mapConversion);
     }
 
     private Conversion mapConversion(ConversionsTable conversionsTable){

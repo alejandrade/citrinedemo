@@ -14,6 +14,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -37,10 +39,12 @@ public class SiService {
 
 
         /**
-         * I was running out of time so I sorted these guys to get past a bug. Not the best implementation but what are you gonna do.
+         *  Originally the code was much cleaner but I ran into a bug where the wrong string was getting replaced.
+         *  If I had more time I would like to write something more robust. But as of now this works.
+         *
          */
-        List<Conversion> conversionListByName = conversionRepository.getAllConversions(SORT_BY_LONGEST_NAME);
-        List<Conversion> conversionListBySymbol = conversionRepository.getAllConversions(SORT_BY_LONGEST_SYMBOL);
+        List<Conversion> conversionListByName = sortConversions(SORT_BY_LONGEST_NAME);
+        List<Conversion> conversionListBySymbol = sortConversions(SORT_BY_LONGEST_SYMBOL);
 
         StringBuilder workingValueEquation = new StringBuilder(input);
         StringBuilder unitName = new StringBuilder(input);
@@ -134,6 +138,10 @@ public class SiService {
             log.info("incorrect input {}", input);
         }
         return "";
+    }
+
+    private List<Conversion> sortConversions(Comparator<Conversion> sort){
+        return conversionRepository.getAllConversions().sorted(sort).collect(Collectors.toList());
     }
 
 
