@@ -1,5 +1,7 @@
 # citrinedemo
 
+## Note that this project is using lombok
+
 [jar](https://s3.amazonaws.com/gigamog-utility/citrinedemo-1.0-SNAPSHOT.jar)
 
 
