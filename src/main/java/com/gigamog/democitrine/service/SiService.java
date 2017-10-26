@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static org.apache.commons.lang3.StringEscapeUtils.escapeJava;
 
 @Slf4j
 @Service
@@ -136,7 +137,7 @@ public class SiService {
         ScriptEngineManager mgr = new ScriptEngineManager();
         ScriptEngine engine = mgr.getEngineByName("JavaScript");
         try {
-            return engine.eval(String.format("Number(%s).toFixed(14)", input)).toString();
+            return engine.eval(String.format("Number(%s).toFixed(14)", escapeJava(input))).toString();
         } catch (ScriptException e) {
             log.info("incorrect input {}", input);
         }
