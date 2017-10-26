@@ -22,7 +22,7 @@ public class Si {
     private String unitName;
 
     @JsonProperty("multiplication_factor")
-    @JsonSerialize(using=precisionDesirializer.class)
+    @JsonSerialize(using = precisionDesirializer.class)
     private BigDecimal multiplicationFactor;
 
     public static class precisionDesirializer extends JsonSerializer<BigDecimal> {

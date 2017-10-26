@@ -14,12 +14,12 @@ import java.util.stream.Stream;
 @Repository
 public class ConversionRepository {
 
-    public Stream<Conversion> getAllConversions(){
+    public Stream<Conversion> getAllConversions() {
         return Arrays.stream(ConversionsTable.values())
                 .map(this::mapConversion);
     }
 
-    private Conversion mapConversion(ConversionsTable conversionsTable){
+    private Conversion mapConversion(ConversionsTable conversionsTable) {
         return Conversion.builder()
                 .name(conversionsTable.name())
                 .si(conversionsTable.getSi())

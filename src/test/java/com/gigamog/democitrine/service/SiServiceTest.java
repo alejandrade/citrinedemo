@@ -16,7 +16,7 @@ public class SiServiceTest {
     SiService siService;
 
     @Before
-    public void setup(){
+    public void setup() {
         siService = new SiService(new ConversionRepository());
     }
 
@@ -25,7 +25,7 @@ public class SiServiceTest {
     public void getSi() throws Exception {
         Si si = siService.getSi("degree/minute");
         Assert.assertEquals("rad/s", si.getUnitName());
-        Assert.assertEquals("0.00029088820867",si.getMultiplicationFactor()
+        Assert.assertEquals("0.00029088820867", si.getMultiplicationFactor()
                 .setScale(14, BigDecimal.ROUND_UP).toPlainString());
     }
 
@@ -33,7 +33,7 @@ public class SiServiceTest {
     public void getSi_degree() throws Exception {
         Si si = siService.getSi("degree");
         Assert.assertEquals("rad", si.getUnitName());
-        Assert.assertEquals("0.00029088820867",si.getMultiplicationFactor()
+        Assert.assertEquals("0.00029088820867", si.getMultiplicationFactor()
                 .setScale(14, BigDecimal.ROUND_UP).toPlainString());
     }
 
@@ -41,7 +41,7 @@ public class SiServiceTest {
     public void getSi_degreeSymbol() throws Exception {
         Si si = siService.getSi("°");
         Assert.assertEquals("rad", si.getUnitName());
-        Assert.assertEquals("0.00029088820867",si.getMultiplicationFactor()
+        Assert.assertEquals("0.00029088820867", si.getMultiplicationFactor()
                 .setScale(14, BigDecimal.ROUND_UP).toPlainString());
     }
 
@@ -49,13 +49,13 @@ public class SiServiceTest {
     public void getSi_degreeMinuteSymbol() throws Exception {
         Si si = siService.getSi("°/min");
         Assert.assertEquals("rad/s", si.getUnitName());
-        Assert.assertEquals("0.00029088820867",si.getMultiplicationFactor()
+        Assert.assertEquals("0.00029088820867", si.getMultiplicationFactor()
                 .setScale(14, BigDecimal.ROUND_UP).toPlainString());
     }
 
 
     @Test
-    public void getSi_DegreeMinuteHectare(){
+    public void getSi_DegreeMinuteHectare() {
         Si si = siService.getSi("degree/(minute*hectare)");
         Assert.assertEquals("rad/(s*m^2)", si.getUnitName());
         Assert.assertEquals("0.00000002908882", si.getMultiplicationFactor()
@@ -63,7 +63,7 @@ public class SiServiceTest {
     }
 
     @Test
-    public void getSi_wronginput(){
+    public void getSi_wronginput() {
         Si si = siService.getSi("dsdfasd");
         Assert.assertEquals("", si.getUnitName());
         Assert.assertEquals(null, si.getMultiplicationFactor());

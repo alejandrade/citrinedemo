@@ -23,9 +23,9 @@ public class SiService {
     private final ConversionRepository conversionRepository;
 
 
-    private static final Comparator<Conversion> SORT_BY_LONGEST_NAME = (x,y)->
+    private static final Comparator<Conversion> SORT_BY_LONGEST_NAME = (x, y) ->
             Integer.valueOf(y.getName().length()).compareTo(x.getName().length());
-    private static final Comparator<Conversion> SORT_BY_LONGEST_SYMBOL = (x,y)->
+    private static final Comparator<Conversion> SORT_BY_LONGEST_SYMBOL = (x, y) ->
             Integer.valueOf(y.getSymbol().length()).compareTo(x.getSymbol().length());
 
     private static final Function<Conversion, String> useName = conversion -> (conversion.getName());
@@ -59,17 +59,18 @@ public class SiService {
 
     /**
      * if the user gives me an invalid input this will catch it and return empty
+     *
      * @param unitName
      * @param multiplicationFactor
      * @return
      */
-    private Si tryToCreateSi(String unitName, String multiplicationFactor){
-        try{
+    private Si tryToCreateSi(String unitName, String multiplicationFactor) {
+        try {
             return Si.builder()
                     .unitName(unitName)
                     .multiplicationFactor(new BigDecimal(multiplicationFactor))
                     .build();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Si.builder()
                     .unitName("")
@@ -81,6 +82,7 @@ public class SiService {
 
     /**
      * I grab the given input and change it two strings. The one that is going to turn into the multiplication factor and the one that shows the symbols
+     *
      * @param conversionList
      * @param workingValueEquationBuilder
      * @param unitNameBuilder
@@ -89,7 +91,7 @@ public class SiService {
     private void processList(List<Conversion> conversionList,
                              StringBuilder workingValueEquationBuilder,
                              StringBuilder unitNameBuilder,
-                             Function<Conversion, String> function){
+                             Function<Conversion, String> function) {
         String workingValueEquation = workingValueEquationBuilder.toString();
         String unitName = unitNameBuilder.toString();
         for (Conversion conversion : conversionList) {
@@ -104,7 +106,7 @@ public class SiService {
     }
 
     private String replaceByKeys(String expression, String value, String first) {
-        if(nextToArithmetic(expression, first))
+        if (nextToArithmetic(expression, first))
             expression = expression.replaceAll(first, value);
 
         return expression;
@@ -119,13 +121,14 @@ public class SiService {
      * @param replacer
      * @return
      */
-    private boolean nextToArithmetic(String expression, String replacer){
+    private boolean nextToArithmetic(String expression, String replacer) {
         return Pattern.compile("(^%[*|\\/|+|-]|[*|\\/|+|-]%$|^%$|\\(%[*|\\/|+|-]|[*|\\/|+|-]%\\))"
                 .replaceAll("%", replacer)).matcher(expression).find();
     }
 
     /**
      * users javasript engine to turn the string expression to the number it needs to be
+     *
      * @param input
      * @return
      */
@@ -133,17 +136,16 @@ public class SiService {
         ScriptEngineManager mgr = new ScriptEngineManager();
         ScriptEngine engine = mgr.getEngineByName("JavaScript");
         try {
-            return  engine.eval(String.format("Number(%s).toFixed(14)", input)).toString();
+            return engine.eval(String.format("Number(%s).toFixed(14)", input)).toString();
         } catch (ScriptException e) {
             log.info("incorrect input {}", input);
         }
         return "";
     }
 
-    private List<Conversion> sortConversions(Comparator<Conversion> sort){
+    private List<Conversion> sortConversions(Comparator<Conversion> sort) {
         return conversionRepository.getAllConversions().sorted(sort).collect(Collectors.toList());
     }
-
 
 
 }

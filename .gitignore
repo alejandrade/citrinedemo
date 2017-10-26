@@ -41,3 +41,6 @@ gradle-app.setting
 # file: ~/.gitignore_global
 .DS_Store
 .idea
+citrinedemo.iml
+src/main/resources/
+src/test/resources/
